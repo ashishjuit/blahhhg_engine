@@ -16,7 +16,16 @@ function getPostById(req, res, next){
   next();
 }
 function getAllPost(req, res, next){
-  console.log('getting all the posts');
+  Post.find(function(err, foundPosts){
+    if(err){
+      res.status(500).json({})
+      msg: err
+    } else {
+      res.status(200).json({
+        posts: foundPosts
+      });
+    }
+  });
 }
 function createPost(req, res, next){
   var post = new Post({
