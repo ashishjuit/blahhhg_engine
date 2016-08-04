@@ -9,17 +9,18 @@ var postSchema = new Schema({
   },
   body: {
     type: String,
-    reuired: true
+    required: true
   },
   created: {
     type: Date,
     required: true
   },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
+  author: String,
+  // author: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true
+  // },
   updated: {
     type: Date,
     required: true

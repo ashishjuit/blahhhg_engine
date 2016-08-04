@@ -17,7 +17,7 @@ var commentSchema = new Schema({
     required: true
   },
   updated: {
-    type: Date.
+    type: Date,
     required: true
   },
   post: {
