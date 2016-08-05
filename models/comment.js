@@ -4,9 +4,8 @@ var Schema = mongoose.Schema;
 
 var commentSchema = new Schema({
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
-    ref: 'User'
   },
   body: {
     type: String,

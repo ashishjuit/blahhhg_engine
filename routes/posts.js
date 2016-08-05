@@ -3,17 +3,25 @@ var express = require('express');
 var router = express.Router();
 var Post = require('../models/post.js')
 
-router.get('/posts/:Id', getPostById);
+router.get('/posts/:id', getPostById);
 router.get('/posts', getAllPost);
 router.post('/posts', createPost);
-router.delete('/posts/:Id', deletePost);
-router.put('/posts/:Id', updatePost);
+router.delete('/posts/:id', deletePost);
+router.put('/posts/:id', updatePost);
 
 module.exports = router;
 
 function getPostById(req, res, next){
-  console.log('getting a specific post');
-  next();
+  Post.findOne({_id: req.params.id}, function(err, foundPost){
+    if(err){
+      res.status(500).json({})
+      msg: err
+    } else {
+      res.status(200).json({
+        msg: foundPost
+      });
+    }
+  });
 }
 function getAllPost(req, res, next){
   Post.find(function(err, foundPosts){
@@ -35,6 +43,7 @@ function createPost(req, res, next){
     created: new Date(),
     updated: new Date()
   });
+
   post.save(function(err, newPost){
     if(err){
       res.status(500).json({
@@ -48,10 +57,31 @@ function createPost(req, res, next){
   });
 }
 function deletePost(req, res, next){
-  console.log('deleting a post');
-  next();
+    console.log('Good!');
+    console.log(req.params);
+  Post.findOneAndRemove({_id: req.params.id}, function(err, removedPost){
+    if(err){
+      res.status(500).json({
+        msg: err
+      });
+    } else {
+      res.status(200).json({
+        msg: removedPost
+      });
+
+    }
+  });
 }
 function updatePost(req, res, next){
-  console.log('updating a post');
-  next();
+  Post.findOneAndUpdate({_id: req.params.id}, req.body, function(err, oldPost){
+     if(err){
+    res.status(500).json({
+      msg: err
+    });
+    } else{
+        res.status(200).json({
+                oldPost: oldPost
+            });
+        }
+    });
 }
